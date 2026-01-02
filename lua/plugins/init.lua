@@ -12,9 +12,11 @@ return {
     'AlexvZyl/nordic.nvim',
     lazy = false,
     priority = 1000,
-    -- config = function()
-    --     require('nordic').load()
-    -- end
+    opts = {
+      on_palette = function(palette)
+        palette.gray0 = palette.black1
+      end,
+    }
   },
   {
     "LazyVim/LazyVim",
