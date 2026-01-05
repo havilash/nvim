@@ -30,6 +30,7 @@ return {
     opts = function(_, opts)
       opts.servers.yamlls = vim.tbl_deep_extend("force", opts.servers.yamlls or {}, {
         settings = {
+          cssls = {},
           yaml = {
             schemaStore = { enable = true },
             schemas = require('schemastore').yaml.schemas {
@@ -94,7 +95,9 @@ return {
     }
   },
 
-  {
-    "tpope/vim-abolish",
-  },
+  { "tpope/vim-abolish" },
+  { 'christoomey/vim-tmux-navigator' },
+  { 'tpope/vim-fugitive' },
+
+  { "nvim-mini/mini.pairs", enabled = false },
 }
