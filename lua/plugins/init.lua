@@ -13,9 +13,9 @@ return {
     lazy = false,
     priority = 1000,
     opts = {
-      on_palette = function(palette)
-        palette.gray0 = palette.black1
-      end,
+      -- on_palette = function(palette)
+      --   palette.gray0 = palette.black1
+      -- end,
     }
   },
   {
@@ -28,19 +28,16 @@ return {
   {
     "neovim/nvim-lspconfig",
     opts = function(_, opts)
+      -- YAML LSP
       opts.servers.yamlls = vim.tbl_deep_extend("force", opts.servers.yamlls or {}, {
         settings = {
-          cssls = {},
           yaml = {
             schemaStore = { enable = true },
             schemas = require('schemastore').yaml.schemas {
               extra = {
                 {
                   description = "AWS SAM template schema",
-                  fileMatch = {
-                    "*.yaml",
-                    "*.yml",
-                  },
+                  fileMatch = { "*.yaml", "*.yml" },
                   name = "aws-sam",
                   url = "https://raw.githubusercontent.com/aws/serverless-application-model/main/samtranslator/schema/schema.json",
                 },
@@ -73,15 +70,16 @@ return {
               "!Condition",
               "!Transform",
             },
-            -- validate = false,
-            -- completion = true,
-            -- hover = true,
-            -- format = { enable = true },
           },
         },
       })
+
+      opts.servers.cssls = opts.servers.cssls or {}
+      opts.servers.emmet_ls = opts.servers.emmet_ls or {}
     end,
   },
+
+  { "jidn/vim-dbml" },
 
   {
     "stevearc/conform.nvim",
@@ -90,14 +88,30 @@ return {
         lua = { "stylua" },
         python = { "black" },
         javascript = { "prettier" },
-        xml = { "xmlformatter" }
+        xml = { "xmlformatter" },
+        sql = { "sqlfmt" }
       },
     }
   },
 
-  { "tpope/vim-abolish" },
   { 'christoomey/vim-tmux-navigator' },
+  { "tpope/vim-abolish" },
   { 'tpope/vim-fugitive' },
 
   { "nvim-mini/mini.pairs", enabled = false },
+
+  {
+    'saghen/blink.cmp',
+    opts = {
+      keymap = {
+        preset = 'default',
+        -- ['<Tab>'] = false,
+        -- ['<CR>'] = false,
+      },
+      snippets = {
+        preset = "luasnip",
+      },
+    }
+  },
+
 }
