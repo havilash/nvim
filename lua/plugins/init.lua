@@ -13,9 +13,13 @@ return {
     lazy = false,
     priority = 1000,
     opts = {
-      -- on_palette = function(palette)
-      --   palette.gray0 = palette.black1
-      -- end,
+      transparent = {
+          bg = false,
+          float = true,
+      },
+      on_palette = function(palette)
+        palette.gray0 = palette.black1
+      end,
     }
   },
   {
