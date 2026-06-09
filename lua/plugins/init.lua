@@ -17,9 +17,6 @@ return {
           bg = false,
           float = true,
       },
-      on_palette = function(palette)
-        palette.gray0 = palette.black1
-      end,
     }
   },
   {
@@ -80,6 +77,7 @@ return {
 
       opts.servers.cssls = opts.servers.cssls or {}
       opts.servers.emmet_ls = opts.servers.emmet_ls or {}
+      opts.servers.pyright = opts.servers.pyright or {}
     end,
   },
 
@@ -93,7 +91,12 @@ return {
         python = { "black" },
         javascript = { "prettier" },
         xml = { "xmlformatter" },
-        sql = { "sqlfmt" }
+        sql = { "sqlfluff" },
+      },
+      formatters = {
+        pg_format = {
+          prepend_args = { "--spaces", "2" },
+        },
       },
     }
   },
@@ -103,6 +106,23 @@ return {
   { 'tpope/vim-fugitive' },
 
   { "nvim-mini/mini.pairs", enabled = false },
+
+  {
+    "jaklimoff/github-actions.nvim",
+    dependencies = {
+      "nvim-telescope/telescope.nvim",
+      "nvim-lua/plenary.nvim",
+    },
+    config = function()
+      require("github-actions").setup({
+        debug = false,
+        telescope_limit = 30,
+      })
+  
+      vim.keymap.set("n", "<leader>ga", "<cmd>GithubActionsStatus<cr>",
+        { desc = "GitHub Actions" })
+    end,
+  },
 
   {
     'saghen/blink.cmp',
@@ -118,4 +138,16 @@ return {
     }
   },
 
+  {
+    "nvim-mini/mini.align",
+    version = false,
+    config = function()
+      require("mini.align").setup()
+    end,
+  },
+
+  {
+    "sindrets/diffview.nvim",
+    cmd = { "DiffviewOpen", "DiffviewFileHistory" },
+  },
 }
